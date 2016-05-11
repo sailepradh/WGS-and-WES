@@ -1,9 +1,9 @@
 ########################################################################
-################## Exome - BWA Analysis ################################ 
+################## Exome - BWT Analysis ################################ 
 ################## Reference (0/0) Homo Analysis #############################
 
-setwd("/Users/salendrapradh/Documents/BWAvsBWT/WES_BWA/Variant_list_WES_BWA/")
-temp =list.files (pattern ="*whomo_WES_BWA.txt")
+setwd("~/Desktop/New_analysis/INDEL_analysis/WGS_WES/WGS_BWA/Variant_list_WGS_BWA/")
+temp =list.files (pattern ="*whomo_WGS_BWA.txt")
 myfiles = lapply (temp,  read.table, sep = " ", stringsAsFactor=FALSE) 
 sample <- sapply(strsplit(temp, "_"), "[",1)
 test_Ref = vector ("list", length(sample))
@@ -16,13 +16,23 @@ number = numeric(length=96)
 
 for (i in 1:96){
   int =  sapply(strsplit((myfiles[[i]][[2]]), ":"),"[",2)
+  
   CD_Ref <- as.numeric(sapply(strsplit(int, ","), "[",1))
   CD_ALT <- as.numeric(sapply(strsplit(int, ","), "[",2))
   CD_ALT_2 <- as.numeric(sapply(strsplit(int, ","), "[",3))
   CD_ALT_2[is.na(CD_ALT_2)] <- 0
+  CD_ALT_3 <- as.numeric(sapply(strsplit(int, ","), "[",4))
+  CD_ALT_3[is.na(CD_ALT_3)] <- 0
+  CD_ALT_4 <- as.numeric(sapply(strsplit(int, ","), "[",5))
+  CD_ALT_4[is.na(CD_ALT_4)] <- 0
+  CD_ALT_5 <- as.numeric(sapply(strsplit(int, ","), "[",6))
+  CD_ALT_5[is.na(CD_ALT_5)] <- 0
+  CD_ALT_6 <- as.numeric(sapply(strsplit(int, ","), "[",7))
+  CD_ALT_6[is.na(CD_ALT_6)] <- 0
   
-  MRR_1 <- round((CD_ALT+CD_ALT_2)/(CD_Ref+CD_ALT+CD_ALT_2), digits =2)
-  MRR_2 <- round((CD_Ref)/(CD_Ref+CD_ALT+CD_ALT_2), digits =2)
+  
+  MRR_1 <- round((CD_ALT+CD_ALT_2+CD_ALT_3+CD_ALT_4+CD_ALT_5+CD_ALT_6)/(CD_Ref+CD_ALT+CD_ALT_2+CD_ALT_3+CD_ALT_4+CD_ALT_5+CD_ALT_6), digits =2)
+  MRR_2 <- round((CD_Ref)/(CD_Ref+CD_ALT+CD_ALT_2+CD_ALT_3+CD_ALT_4+CD_ALT_5+CD_ALT_6), digits =2)
   MRR <- pmin(MRR_1,MRR_2)
   mean_MRR[i] = round(mean(as.numeric(MRR),na.rm=TRUE), digit =2)
   
@@ -30,8 +40,8 @@ for (i in 1:96){
   mean_CD [i] <- round( mean (as.numeric(CD),na.rm=TRUE), digits =2)
   GQ <- as.numeric(sapply(strsplit(as.character (myfiles[[i]][[2]]), ":"),"[",4))
   mean_GQ [i] <- round(mean(as.numeric(GQ),na.rm=TRUE), digits =2)
-  number[i] <- length(CD_ALT)
-  test_Ref[[i]] = cbind (CD_Ref,CD_ALT,MRR,CD,GQ)
+  number[i] <- length(CD_Ref)
+  test_Ref[[i]] = cbind (CD_Ref,CD_ALT,CD_ALT_2,CD_ALT_3,CD_ALT_4,CD_ALT_4,CD_ALT_5,CD_ALT_6,MRR,CD,GQ)
 }
 
 par (mfrow =c(2,2))
@@ -46,16 +56,16 @@ Int_1
 #Int_3 <- S0156_whomo_g[which(is.nan(MRR))]
 #Int_4 <- S0156_whomo_g[which(MRR > 0.00)]
 
-Reference_ExoVsExo_BWA_Summary =cbind(sample,number,mean_CD,mean_GQ,mean_MRR)
-write.table(Reference_ExoVsExo_BWA_Summary,
-            "/Users/salendrapradh/WGS-and-WES/result/BWAvsBWT/Reference_ExoVsExo_BWA_Summary.tsv",
+Ref_Gen_GenvsExo_Summary_indel =cbind(sample,number,mean_CD,mean_GQ,mean_MRR)
+write.table(Ref_Gen_GenvsExo_Summary_indel,
+            "/Users/salendrapradh/WGS-and-WES/result/GenvsExo/INDEL/Ref_Gen_GenvsExo_Summary_indel.tsv",
             sep="\t", quote =F , row.names = F)
 
 ##################################################################################
 ############ Alternate (0/1) Heterozugous Genome Analysis ########################
 
-setwd("/Users/salendrapradh/Documents/BWAvsBWT/WES_BWA/Variant_list_WES_BWA//")
-temp =list.files (pattern ="*het_WES_BWA.txt")
+setwd("~/Desktop/New_analysis/INDEL_analysis/WGS_WES/WGS_BWA/Variant_list_WGS_BWA//")
+temp =list.files (pattern ="*het_WGS_BWA.txt")
 myfiles = lapply (temp,  read.table, sep = " ", stringsAsFactor=FALSE) 
 sample <- sapply(strsplit(temp, "_"), "[",1)
 test_het = vector ("list", length(sample))
@@ -68,13 +78,23 @@ number = numeric(length=96)
 
 for (i in 1:96){
   int =  sapply(strsplit((myfiles[[i]][[2]]), ":"),"[",2)
+  
   CD_Ref <- as.numeric(sapply(strsplit(int, ","), "[",1))
   CD_ALT <- as.numeric(sapply(strsplit(int, ","), "[",2))
   CD_ALT_2 <- as.numeric(sapply(strsplit(int, ","), "[",3))
   CD_ALT_2[is.na(CD_ALT_2)] <- 0
+  CD_ALT_3 <- as.numeric(sapply(strsplit(int, ","), "[",4))
+  CD_ALT_3[is.na(CD_ALT_3)] <- 0
+  CD_ALT_4 <- as.numeric(sapply(strsplit(int, ","), "[",5))
+  CD_ALT_4[is.na(CD_ALT_4)] <- 0
+  CD_ALT_5 <- as.numeric(sapply(strsplit(int, ","), "[",6))
+  CD_ALT_5[is.na(CD_ALT_5)] <- 0
+  CD_ALT_6 <- as.numeric(sapply(strsplit(int, ","), "[",7))
+  CD_ALT_6[is.na(CD_ALT_6)] <- 0
   
-  MRR_1 <- round((CD_ALT+CD_ALT_2)/(CD_Ref+CD_ALT+CD_ALT_2), digits =2)
-  MRR_2 <- round((CD_Ref)/(CD_Ref+CD_ALT+CD_ALT_2), digits =2)
+  
+  MRR_1 <- round((CD_ALT+CD_ALT_2+CD_ALT_3+CD_ALT_4+CD_ALT_5+CD_ALT_6)/(CD_Ref+CD_ALT+CD_ALT_2+CD_ALT_3+CD_ALT_4+CD_ALT_5+CD_ALT_6), digits =2)
+  MRR_2 <- round((CD_Ref)/(CD_Ref+CD_ALT+CD_ALT_2+CD_ALT_3+CD_ALT_4+CD_ALT_5+CD_ALT_6), digits =2)
   MRR <- pmin(MRR_1,MRR_2)
   mean_MRR[i] = round(mean(as.numeric(MRR),na.rm=TRUE), digit =2)
   
@@ -82,20 +102,20 @@ for (i in 1:96){
   mean_CD [i] <- round( mean (as.numeric(CD),na.rm=TRUE), digits =2)
   GQ <- as.numeric(sapply(strsplit(as.character (myfiles[[i]][[2]]), ":"),"[",4))
   mean_GQ [i] <- round(mean(as.numeric(GQ),na.rm=TRUE), digits =2)
-  number[i] <- length(CD_ALT)
-  test_het[[i]] = cbind (CD_Ref,CD_ALT,MRR,CD,GQ)
+  number[i] <- length(CD_Ref)
+  test_het[[i]] = cbind (CD_Ref,CD_ALT,CD_ALT_2,CD_ALT_3,CD_ALT_4,CD_ALT_4,CD_ALT_5,CD_ALT_6,MRR,CD,GQ)
 }
 
-Het_ExoVsExo_BWA_Summary =cbind(sample,number,mean_CD,mean_GQ,mean_MRR)
-write.table(Het_ExoVsExo_BWA_Summary,
-            "/Users/salendrapradh/WGS-and-WES/result/BWAvsBWT/Het_ExoVsExo_BWA_Summary.tsv",
+Het_Gen_GenVsExo_Summary_indel =cbind(sample,number,mean_CD,mean_GQ,mean_MRR)
+write.table(Het_Gen_GenVsExo_Summary_indel ,
+            "/Users/salendrapradh/WGS-and-WES/result/GenvsExo/INDEL/Het_Gen_GenVsExo_Summary_indel.tsv",
             sep="\t", quote =F , row.names = F)
 
-##################################################################################
-############ Mutant (1/1) Homozygous Genome Analysis ############################
 
-setwd("/Users/salendrapradh/Documents/BWAvsBWT/WES_BWA/Variant_list_WES_BWA/")
-temp =list.files (pattern ="*mhomo_WES_BWA.txt")
+##################################################################################
+############ Mutant (1/1) Homozygous Genome Analysis ########################
+setwd("~/Desktop/New_analysis/INDEL_analysis/WGS_WES/WGS_BWA/Variant_list_WGS_BWA/")
+temp =list.files (pattern ="*mhomo_WGS_BWA.txt")
 myfiles = lapply (temp,  read.table, sep = " ", stringsAsFactor=FALSE) 
 sample <- sapply(strsplit(temp, "_"), "[",1)
 test_homo = vector ("list", length(sample))
@@ -108,13 +128,23 @@ number = numeric(length=96)
 
 for (i in 1:96){
   int =  sapply(strsplit((myfiles[[i]][[2]]), ":"),"[",2)
+  
   CD_Ref <- as.numeric(sapply(strsplit(int, ","), "[",1))
   CD_ALT <- as.numeric(sapply(strsplit(int, ","), "[",2))
   CD_ALT_2 <- as.numeric(sapply(strsplit(int, ","), "[",3))
   CD_ALT_2[is.na(CD_ALT_2)] <- 0
+  CD_ALT_3 <- as.numeric(sapply(strsplit(int, ","), "[",4))
+  CD_ALT_3[is.na(CD_ALT_3)] <- 0
+  CD_ALT_4 <- as.numeric(sapply(strsplit(int, ","), "[",5))
+  CD_ALT_4[is.na(CD_ALT_4)] <- 0
+  CD_ALT_5 <- as.numeric(sapply(strsplit(int, ","), "[",6))
+  CD_ALT_5[is.na(CD_ALT_5)] <- 0
+  CD_ALT_6 <- as.numeric(sapply(strsplit(int, ","), "[",7))
+  CD_ALT_6[is.na(CD_ALT_6)] <- 0
   
-  MRR_1 <- round((CD_ALT+CD_ALT_2)/(CD_Ref+CD_ALT+CD_ALT_2), digits =2)
-  MRR_2 <- round((CD_Ref)/(CD_Ref+CD_ALT+CD_ALT_2), digits =2)
+  
+  MRR_1 <- round((CD_ALT+CD_ALT_2+CD_ALT_3+CD_ALT_4+CD_ALT_5+CD_ALT_6)/(CD_Ref+CD_ALT+CD_ALT_2+CD_ALT_3+CD_ALT_4+CD_ALT_5+CD_ALT_6), digits =2)
+  MRR_2 <- round((CD_Ref)/(CD_Ref+CD_ALT+CD_ALT_2+CD_ALT_3+CD_ALT_4+CD_ALT_5+CD_ALT_6), digits =2)
   MRR <- pmin(MRR_1,MRR_2)
   mean_MRR[i] = round(mean(as.numeric(MRR),na.rm=TRUE), digit =2)
   
@@ -122,13 +152,13 @@ for (i in 1:96){
   mean_CD [i] <- round( mean (as.numeric(CD),na.rm=TRUE), digits =2)
   GQ <- as.numeric(sapply(strsplit(as.character (myfiles[[i]][[2]]), ":"),"[",4))
   mean_GQ [i] <- round(mean(as.numeric(GQ),na.rm=TRUE), digits =2)
-  number[i] <- length(CD_ALT)
-  test_homo[[i]] = cbind (CD_Ref,CD_ALT,MRR,CD,GQ)
+  number[i] <- length(CD_Ref)
+  test_homo[[i]] = cbind (CD_Ref,CD_ALT,CD_ALT_2,CD_ALT_3,CD_ALT_4,CD_ALT_4,CD_ALT_5,CD_ALT_6,MRR,CD,GQ)
 }
 
-Mut_ExoVsExo_BWA_Summary =cbind(sample,number,mean_CD,mean_GQ,mean_MRR)
-write.table(Mut_ExoVsExo_BWA_Summary,
-            "/Users/salendrapradh/WGS-and-WES/result/BWAvsBWT/Mut_ExoVsExo_BWA_Summary.tsv",
+
+Homo_Gen_GenVsExo_Summary_indel =cbind(sample,number,mean_CD,mean_GQ,mean_MRR)
+write.table(Homo_Gen_GenVsExo_Summary_indel,"/Users/salendrapradh/WGS-and-WES/result/GenvsExo/INDEL/Homo_Gen_GenVsExo_Summary_indel.tsv",
             sep="\t", quote =F , row.names = F)
 
 
@@ -159,6 +189,119 @@ qplot(as.data.frame(Het_Exome_BWAvsBWT_BWT_Summary[,2]), data =as.data.frame(Het
 
 
 
+
+hist(as.numeric(test$S0156[1:(dim(test$S0156)[1]),4]),
+     breaks=1000, col=rgb(0,0,0,0),border =rgb(0,0,0,0),
+     ylim = c(0,1200), xlim = c(0,250),
+     main ="Read Depth Gen Exome Sequencing", xlab ="Read Depth", ylab="Number of Variants")
+#cex.lab = 0.95,cex.main = 0.95) 
+
+
+for(i in 1:96){ 
+  hist(as.numeric(test[[i]][,4]),na.rm=TRUE, breaks=1000,add=TRUE, 
+       xlab='Approximate Read Depth', ylab = 'Number of Variants',
+       main ="Read Depth Genome Platform sample[1]", border=rgb(0,1,1,1))}
+
+for(i in 1:96){ 
+  hist(as.numeric(test_Ref[[i]][,4]),na.rm=TRUE, breaks=1000,add=TRUE, 
+       xlab='Approximate Read Depth', ylab = 'Number of Variants',
+       main ="Read Depth Genome Platform sample[1]", border=rgb(1,1,0,1))}
+
+for(i in 1:96){ 
+  hist(as.numeric(test_het[[i]][,4]),na.rm=TRUE, breaks=1000,add=TRUE, 
+       xlab='Approximate Read Depth', ylab = 'Number of Variants',
+       main ="Read Depth Genome Platform sample[1]", border=rgb(1,0,0,1))}
+
+for(i in 1:96){ 
+  hist(as.numeric(test_homo[[i]][,4]),na.rm=TRUE, breaks=1000,add=TRUE, 
+       xlab='', ylab = 'Number of Variants',
+       main ="", border=rgb(0,0.5,0.5,0.5))}
+
+leg.txt <- c("All variant", "Reference Homozygous(A/A)",
+             "Heterozygous(a/A)", "Mutant Homozygous (a/a)")
+col =c(rgb(0,1,1,1),
+       rgb(1,1,0,1),
+       rgb(1,0,0,1),
+       rgb(0,0.5,0.5,0.5))
+
+legend("topright", col=col, leg.txt,cex=1, pch=20, pt.cex = 1,bty = "n") 
+#######################################################
+
+par(mfrow=c(2,2))
+hist(as.numeric(test$S0156[1:(dim(test$S0156)[1]),3]),
+     breaks=10000, col=rgb(0,0,0,0),border =rgb(0,0,0,0),
+     xlim = c(0,1),yaxt="n",ylim =c(0, 15000),
+     main ="Minor Allele Ratio in all variants", xlab ="MRR ", ylab="Number of Variants")
+#cex.lab = 0.95,cex.main = 0.95) 
+
+axis(2)
+for(i in 1:96){ 
+  hist(as.numeric(test[[i]][,3]),na.rm=TRUE, breaks=100,add=TRUE, 
+       xlab='Approximate Read Depth', ylab = 'Number of Variants',
+       main ="Read Depth Genome Platform sample[1]", col=rgb(0,0,1,1))}
+
+
+hist(as.numeric(test_Ref$S0156[1:(dim(test_Ref$S0156)[1]),3]),
+     breaks=100, col=rgb(0,0,0,0),border =rgb(0,0,0,0),
+     xlim = c(0,1),yaxt="n",ylim =c(0, 2500),
+     main ="Ref(A/A) variants", xlab ="MRR ", ylab="Number of Variants")
+#cex.lab = 0.95,cex.main = 0.95) 
+
+axis(2)
+for(i in 1:96){ 
+  hist(as.numeric(test_Ref[[i]][,3]),na.rm=TRUE, breaks=100,add=TRUE, 
+       xlab='Approximate Read Depth', ylab = 'Number of Variants',
+       main ="Read Depth Genome Platform sample[1]", col=rgb(0,0,1,1))}
+
+hist(as.numeric(test_het$S0156[1:(dim(test_het$S0156)[1]),3]),
+     breaks=100, col=rgb(0,0,0,0),border =rgb(0,0,0,0),
+     xlim = c(0,1),yaxt="n",ylim =c(0, 100),
+     main ="Het(a/A) variants", xlab ="MRR ", ylab="Number of Variants")
+#cex.lab = 0.95,cex.main = 0.95) 
+
+axis(2)
+for(i in 1:96){ 
+  hist(as.numeric(test_het[[i]][,3]),na.rm=TRUE, breaks=100,add=TRUE, 
+       xlab='Approximate Read Depth', ylab = 'Number of Variants',
+       main ="Read Depth Genome Platform sample[1]", col=rgb(0,0,1,1))}
+
+
+hist(as.numeric(test_homo$S0156[1:(dim(test_homo$S0156)[1]),3]),
+     breaks=5, col=rgb(0,0,0,0),border =rgb(0,0,0,0),
+     xlim = c(0,1),yaxt="n",ylim =c(0, 500),
+     main ="Homo(a/a) variants", xlab ="MRR ", ylab="Number of Variants")
+#cex.lab = 0.95,cex.main = 0.95) 
+
+axis(2)
+for(i in 1:96){ 
+  hist(as.numeric(test_homo[[i]][,3]),na.rm=TRUE, breaks=30,add=TRUE, 
+       xlab='Approximate Read Depth', ylab = 'Number of Variants',
+       main ="Read Depth Genome Platform sample[1]", col=rgb(0,0,1,1))}
+
+
+############################################################
+par(mfrow=c(2,2))
+hist(as.numeric(test_Ref$S0156[1:(dim(test_Ref$S0156)[1]),5]),
+     breaks=1000,prob=TRUE,border="white", ylim = c(0, 0.2), 
+     main ="Genotyping Quality Genome Sequencing Homo variants", xlab ="Genotyping Quality", ylab="Density", cex.lab =
+       0.95, cex.main = 0.95) 
+
+
+for(i in 1:96){ 
+  lines(density(as.numeric(test[[i]][,5]),na.rm=TRUE),col="darkorange")}
+
+for(i in 1:96){ 
+  lines(density(as.numeric(test_Ref[[i]][,5]),na.rm=TRUE),col="darkorange")}
+
+for(i in 1:96){ 
+  lines(density(as.numeric(test_het[[i]][,5]),na.rm=TRUE),col="darkorange")}
+
+for(i in 1:96){ 
+  lines(density(as.numeric(test_homo[[i]][,5]),na.rm=TRUE),col="red")}
+
+
+
+
 ###########################Not done############################
 ##################################################################################
 ############ Mutant homo second allele(2/2) case Genome Analysis ########################
@@ -178,9 +321,7 @@ for (i in 1:95){
   CD_Ref <- as.numeric(sapply(strsplit(int, ","), "[",1))
   CD_ALT <- as.numeric(sapply(strsplit(int, ","), "[",2))
   CD_ALT_2 <- as.numeric(sapply(strsplit(int, ","), "[",3))
-  MRR_1 <- round((CD_ALT+CD_ALT_2)/(CD_Ref+CD_ALT+CD_ALT_2), digits =2)
-  MRR_2 <- round((CD_Ref)/(CD_Ref+CD_ALT+CD_ALT_2), digits =2)
-  MRR <- pmin(MRR_1,MRR_2)
+  MRR <- round((CD_ALT+CD_ALT_2)/(CD_Ref+CD_ALT+CD_ALT_2), digits =2)
   mean_MRR[i] = round(mean(as.numeric(MRR),na.rm=TRUE), digit =2)
   CD <- as.numeric(sapply(strsplit(as.character (myfiles[[i]][[6]]), ":"),"[",3))
   mean_CD [i] <- round( mean (as.numeric(CD),na.rm=TRUE), digits =2)

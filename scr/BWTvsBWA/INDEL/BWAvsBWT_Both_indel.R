@@ -317,7 +317,7 @@ write.table(Homo_Both_ExoVsExo_Summary_indel,
 
 setwd("~/Desktop/New_analysis/INDEL_analysis/Discordant_analysis/Discordant_BWA_BWT/Variant_test/")
 temp =list.files (pattern ="*BWAvsBWT.txt")
-myfiles = lapply (temp,  read.table, sep = " ", stringsAsFactor=FALSE) 
+myfiles = lapply (temp,  read.table, seqp = " ", stringsAsFactor=FALSE) 
 sample <- sapply(strsplit(temp, "_"), "[",2)
 test_dis = vector ("list", length(sample))
 names(test_dis) <- sample
