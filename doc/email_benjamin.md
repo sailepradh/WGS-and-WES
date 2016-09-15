@@ -40,9 +40,9 @@ HOM/REF untrustworthy due to poor coverage and poor quality in both WES and WGS.
 
 
 # HIGHLIGHTS
-*30X WGS data is better than 30X WES data (more variants, higher quality).
-*Increasing the coverage of the WES data from ~30X to about ~70X improves the WES data but not to the effect that it surpasses the 30X WGS data.
-*The depth of HET and HOM variants is much higher than REF variants in WES data.
-*The quality of discordant variants is low for WES data.
-*The quality of HET variants is higher than for other variants in both WES and WGS.
-*The most abundant discordant variants are the ones called as HET in WGS and REF in WES and they can be better trusted as correct in WGS data.
+* 30X WGS data is better than 30X WES data (more variants, higher quality).
+* Increasing the coverage of the WES data from ~30X to about ~70X improves the WES data but not to the effect that it surpasses the 30X WGS data.
+* The depth of HET and HOM variants is much higher than REF variants in WES data.
+* The quality of discordant variants is low for WES data.
+* The quality of HET variants is higher than for other variants in both WES and WGS.
+* The most abundant discordant variants are the ones called as HET in WGS and REF in WES and they can be better trusted as correct in WGS data.
